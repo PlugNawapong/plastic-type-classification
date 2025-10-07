@@ -264,7 +264,7 @@ Complete pipeline for pixel-wise plastic classification from hyperspectral image
 
 - 🎯 **6 Model Architectures**: CNN, ResNet, Deep CNN, Inception, LSTM, Transformer
 - ⚡ **GPU Accelerated**: Supports Apple Silicon M4 (MPS) and CUDA
-- 📊 **11 Plastic Classes**: Background + 10 plastic types
+- 📊 **11 Plastic Classes**: Background + 10 plastic types (11 total)
 - 🔬 **458 Spectral Bands**: 450-850nm wavelength range
 - ☁️ **Google Colab Ready**: Notebook included for cloud training
 

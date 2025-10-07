@@ -1,8 +1,8 @@
 # Data folders (too large for GitHub)
 training_dataset/
 training_dataset_normalized/
-Inference_dataset1/
-Inference_dataset1_normalized/
+Inference_dataset*/
+Inference_dataset*_normalized/
 Ground_Truth/
 
 # Output folders
