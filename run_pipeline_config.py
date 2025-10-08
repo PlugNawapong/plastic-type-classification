@@ -96,8 +96,6 @@ def parse_arguments():
 
     # Dataset
     data_group = parser.add_argument_group('Dataset Parameters')
-    data_group.add_argument('--no-ignore-background', action='store_true',
-                            help='Include background pixels in training')
     data_group.add_argument('--no-augment', action='store_true',
                             help='Disable data augmentation')
     data_group.add_argument('--val-ratio', type=float, default=config.DATASET['val_ratio'],
@@ -176,7 +174,6 @@ def build_config_from_args(args):
 
         # Dataset
         'dataset': {
-            'ignore_background': not args.no_ignore_background,
             'augment': not args.no_augment,
             'val_ratio': args.val_ratio,
             'batch_size': args.batch_size,
@@ -232,7 +229,6 @@ def print_config_summary(cfg):
 
     print("\n[Dataset]")
     ds = cfg['dataset']
-    print(f"  Ignore background: {ds['ignore_background']}")
     print(f"  Augmentation: {ds['augment']}")
     print(f"  Validation ratio: {ds['val_ratio']}")
     print(f"  Batch size: {ds['batch_size']}")
@@ -319,13 +315,24 @@ def main():
             )
 
     if args.mode in ['full', 'train']:
-        # Check if normalized data exists when skipping normalization
-        if args.skip_normalize and args.mode == 'train':
-            if not Path(cfg['normalized_training_folder']).exists():
-                print("\n❌ Error: Normalized training data not found!")
-                print(f"   Expected folder: {cfg['normalized_training_folder']}")
-                print("   Either run normalization first or use already normalized data.")
-                sys.exit(1)
+        # Determine which data folder to use
+        if args.skip_normalize:
+            # Use original data (already normalized)
+            training_data_folder = cfg['training_data_folder']
+            print(f"\n✓ Using original data (already normalized): {training_data_folder}")
+        else:
+            # Use normalized data folder
+            training_data_folder = cfg['normalized_training_folder']
+
+        # Check if training data exists
+        if not Path(training_data_folder).exists():
+            print(f"\n❌ Error: Training data not found!")
+            print(f"   Expected folder: {training_data_folder}")
+            if args.skip_normalize:
+                print("   The original data folder doesn't exist.")
+            else:
+                print("   Run normalization first or use --skip-normalize if data is already normalized.")
+            sys.exit(1)
 
         print("\n" + "="*60)
         print("STEP 3: TRAINING MODEL")
@@ -346,10 +353,9 @@ def main():
 
         # Override training config
         pipeline_train.CONFIG = {
-            'data_folder': cfg['normalized_training_folder'],
+            'data_folder': training_data_folder,
             'label_path': f"{cfg['ground_truth_folder']}/labels.png",
             'preprocess': cfg['preprocessing'],
-            'ignore_background': cfg['dataset']['ignore_background'],
             'augment': cfg['dataset']['augment'],
             'val_ratio': cfg['dataset']['val_ratio'],
             'batch_size': cfg['dataset']['batch_size'],

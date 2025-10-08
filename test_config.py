@@ -17,7 +17,6 @@ pipeline_train.CONFIG = {
         'denoise_method': 'gaussian',
         'denoise_strength': 3.0
     },
-    'ignore_background': True,
     'augment': True,
     'val_ratio': 0.2,
     'batch_size': 512,

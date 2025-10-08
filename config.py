@@ -53,7 +53,6 @@ PREPROCESSING = {
 # =====================================================================
 
 DATASET = {
-    'ignore_background': False,    # Ignore background class (class 0) during training
     'augment': True,               # Apply data augmentation (noise injection)
     'val_ratio': 0.2,              # Validation set ratio (0.0-1.0)
     'batch_size': 512,             # Batch size for training

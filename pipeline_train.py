@@ -295,7 +295,6 @@ def main():
             },
 
             # Dataset
-            'ignore_background': True,
             'augment': True,
             'val_ratio': 0.2,
             'batch_size': 512,
@@ -339,7 +338,6 @@ def main():
     print("\n[4/6] Creating dataset...")
     dataset = HyperspectralDataset(
         cube, labels,
-        ignore_background=CONFIG['ignore_background'],
         augment=CONFIG['augment']
     )
 

@@ -64,12 +64,11 @@ class HyperspectralDataset(Dataset):
     Each sample is a 1D spectral signature (num_bands,) with corresponding class label.
     """
 
-    def __init__(self, cube, labels, ignore_background=True, augment=False):
+    def __init__(self, cube, labels, augment=False):
         """
         Args:
             cube: 3D numpy array (H x W x Bands)
             labels: 2D numpy array (H x W) with class indices
-            ignore_background: If True, exclude background pixels (class 0)
             augment: If True, apply data augmentation
         """
         self.cube = cube
@@ -80,11 +79,8 @@ class HyperspectralDataset(Dataset):
         height, width, num_bands = cube.shape
         self.num_bands = num_bands
 
-        # Create list of (row, col) for all valid pixels
-        if ignore_background:
-            valid_mask = labels != 0
-        else:
-            valid_mask = np.ones_like(labels, dtype=bool)
+        # Create list of (row, col) for all pixels (including background)
+        valid_mask = np.ones_like(labels, dtype=bool)
 
         self.pixel_coords = np.argwhere(valid_mask)  # (N x 2)
         self.num_samples = len(self.pixel_coords)
@@ -241,7 +237,7 @@ if __name__ == '__main__':
 
     # Create dataset
     print("\nCreating dataset...")
-    dataset = HyperspectralDataset(cube, labels, ignore_background=True, augment=True)
+    dataset = HyperspectralDataset(cube, labels, augment=True)
 
     # Split dataset
     train_dataset, val_dataset = create_train_val_split(dataset, val_ratio=0.2)
