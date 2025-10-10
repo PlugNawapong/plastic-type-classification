@@ -59,7 +59,7 @@ from scipy.ndimage import uniform_filter
 # ========================================
 # CONFIGURATION
 # ========================================
-DATA_FOLDER = 'normalized_dataset'  # Options: 'training_dataset', 'normalized_dataset'
+DATA_FOLDER = 'normalized_dataset_new'  # Options: 'training_dataset', 'normalized_dataset'
 
 # Wavelength range filter (set to None to disable)
 # Example: (450, 700) to view only 450-700 nm range

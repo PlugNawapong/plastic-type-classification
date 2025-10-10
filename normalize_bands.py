@@ -27,7 +27,7 @@ from tqdm import tqdm
 # CONFIGURATION
 # ========================================
 INPUT_FOLDER = 'training_dataset'
-OUTPUT_FOLDER = 'normalized_dataset'
+OUTPUT_FOLDER = 'normalized_dataset_new'
 LOWER_PERCENTILE = 2
 UPPER_PERCENTILE = 98
 # ========================================
