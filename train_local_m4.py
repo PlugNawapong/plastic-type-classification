@@ -28,21 +28,21 @@ from pipeline_model import create_model, count_parameters
 # =====================================================================
 CONFIG = {
     # Data paths - Base directory: DeepLearning_Plastics
-    'data_folder': 'DeepLearning_Plastics/training_dataset_normalized',
-    'label_path': 'DeepLearning_Plastics/Ground_Truth/labels.png',
-    'output_dir': 'DeepLearning_Plastics/outputs/local_m4',
+    'data_folder': 'training_dataset_normalized',
+    'label_path': 'Ground_Truth/labels.png',
+    'output_dir': 'outputs/local_m4',
     
     # Preprocessing
     'preprocess': {
-        'wavelength_range': (450, 1000),  # nm
-        'spatial_binning': None,  # None or int (e.g., 2 for 2x2 binning)
-        'spectral_binning': None,  # None or int
+        'wavelength_range': (450, 700),  # nm
+        'spatial_binning': 2,  # None or int (e.g., 2 for 2x2 binning)
+        'spectral_binning': 5,  # None or int
         'smoothing': False,
         'normalize': True,
     },
     
     # Model architecture
-    'model_type': 'attention_net',  # Options: 'spectral_cnn', 'hybrid_sn', 'resnet1d', 'attention_net', 'deep_cnn'
+    'model_type': 'spectral_cnn',  # Options: 'spectral_cnn', 'hybrid_sn', 'resnet1d', 'attention_net', 'deep_cnn'
     'dropout_rate': 0.5,
     
     # Training parameters (optimized for M4)
@@ -107,7 +107,7 @@ class Trainer:
         
         # Learning rate scheduler
         self.scheduler = optim.lr_scheduler.ReduceLROnPlateau(
-            self.optimizer, mode='max', factor=0.5, patience=5, verbose=True
+            self.optimizer, mode='max', factor=0.5, patience=5
         )
         
         # Tracking
