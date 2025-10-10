@@ -27,10 +27,10 @@ from pipeline_model import create_model, count_parameters
 # CONFIGURATION FOR MACBOOK AIR M4
 # =====================================================================
 CONFIG = {
-    # Data paths (local Mac paths)
-    'data_folder': '/Users/nawapong/Projects/plastic-type-classification/training_dataset_normalized',
-    'label_path': '/Users/nawapong/Projects/plastic-type-classification/Ground_Truth/labels.json',
-    'output_dir': '/Users/nawapong/Projects/plastic-type-classification/outputs/local_m4',
+    # Data paths - Base directory: DeepLearning_Plastics
+    'data_folder': 'DeepLearning_Plastics/training_dataset_normalized',
+    'label_path': 'DeepLearning_Plastics/Ground_Truth/labels.png',
+    'output_dir': 'DeepLearning_Plastics/outputs/local_m4',
     
     # Preprocessing
     'preprocess': {
